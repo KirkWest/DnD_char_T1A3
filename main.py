@@ -20,4 +20,9 @@ for a in attribute_names:
     attribute_scores[a] = score
 print(f"Welcome, {char_name} the {print_class}, below are your attributes:")
 
- 
+ # need to finish the dice roll attribute allocation
+
+ # need to add in a re-roll option for attributes
+ # need to create the file handling part
+ # once file handling is built create an edit character functions as per option 2 and
+ # print all characters created as per option 3
