@@ -19,7 +19,7 @@ def char_name():
 
 # list of classes available
 def print_classes():
-    print("1. Barbarian")
+    print(". Barbarian")
     print("2. Bard")
     print("3. Cleric")
     print("4. Druid")
@@ -33,3 +33,27 @@ def print_classes():
     print("12. Wizard")
     choice = input("Which class would you like? press '1-12' to select")
     return choice
+
+# made the classes a dictionary to clean it up, this way I can let the user just input an integer value
+# to select the class but only returns the class name. Hopefully cleaner for file handling
+def print_classes():
+    classes = {"1": "Barbarian",
+               "2": "Bard",
+               "3": "Cleric",
+               "4": "Druid",
+               "5": "Fighter",
+               "6": "Monk",
+               "7": "Paladin",
+               "8": "Ranger",
+               "9": "Rogue",
+               "10": "Sorcerer",
+               "11": "Warlock",
+               "12": "Wizard"
+               }
+    for i, c in classes.items():
+        print(f"{i}. {c}")
+    choice = input("Which class would you like? Type the number (1-12) of the class you want to select:")
+    return classes.get(choice)
+
+choice = print_classes()
+print("you've chosen " + choice)
