@@ -2,14 +2,15 @@ def create_menu():
     print("1. Create new character enter 1")
     print("2. Edit previous character enter 2")
     print("3. See list of created characters enter 3")
-    choice = input("Type the number (1-3): ")
-    return " "
+    print("4. Exit enter 4")
+    menu_choice = input("Type the number (1-4): ")
+    return menu_choice
     
 
 # character name input def
 def char_name():
     name = input("What name would you like to call your character?: ")
-    return "Great name \n"
+    return name
     
 
 # made the classes a dictionary to clean it up, this way I can let the user just input an integer value

@@ -6,19 +6,34 @@ attribute_scores = {}
 attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom" "charisma"]
 print("Welcome to you Dnd character creator, would you like to")
 
-print(create_menu())
+menu_choice = ""
 
-print(char_name())
+while menu_choice != "4":
+    menu_choice = create_menu()
 
-choice = print_class()
-print("you've chosen the " + choice + " class")
+    match menu_choice:
+        case "1":
+            print("You have chosen to create a new character.")
+            name = char_name()
+            print(f"Hello {name} \n")
+            char_class = print_class()
+            print(f"You've chosen {char_class}. \n")
+            attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+            attribute_scores = {}
+            for a in attribute_names:
+                score = dice_roll(4)
+                attribute_scores[a] = score
+                print(f"Below are your attribute scores: {attribute_scores}") # dice roll funciton needs cleaning up
+        case "2":
+            print("You have chosen to edit a previous character.")
+        case "3":
+            print("You have chosen to see a list of created characters.")
+        case "4":
+            print("Thankyou for using DnD character creator")
+        case _:
+            print("Please enter a number from 1-4.")
+    
 
-attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
-
-for a in attribute_names:
-    score = dice_roll(4)
-    attribute_scores[a] = score
-print(f"Welcome, {char_name} the {print_class}, below are your attributes:")
 
  # need to finish the dice roll attribute allocation
 
