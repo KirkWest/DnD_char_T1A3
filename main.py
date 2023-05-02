@@ -13,17 +13,25 @@ while menu_choice != "4":
 
     match menu_choice:
         case "1":
-            # print("You have chosen to create a new character.")
-            # name = char_name()
-            # print(f"Hello {name} \n")
-            # char_class = print_class()
-            # print(f"You've chosen {char_class}. \n")
+            print("You have chosen to create a new character.\n")
+            name = char_name()
+            char_class = print_class()
             attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
             attribute_scores = {}
             for a in attribute_names:
                 score = dice_roll(4)
                 attribute_scores[a] = score
-            print(f"Below are your attribute scores: {attribute_scores} \n") # dice roll funciton needs cleaning up
+            import os
+            os.system('cls' if os.name == 'nt' else 'clear')
+            # clears the terminal for a cleaner display of the final results
+            print("Thank you for using Dnd Character Creator")
+            print(f"Character name: {name}")
+            print(f"Character class: {char_class}\n")
+            print("Below are your attribute scores:")
+            for key, value in attribute_scores.items():
+                print(key+str(":"), value)
+                print("")
+                print("What would you like to do now?")
         case "2":
             print("You have chosen to edit a previous character.")
         case "3":

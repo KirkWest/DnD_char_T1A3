@@ -3,13 +3,16 @@ def create_menu():
     print("2. Edit previous character enter 2")
     print("3. See list of created characters enter 3")
     print("4. Exit enter 4")
+    print("")
     menu_choice = input("Type the number (1-4): ")
+    print("")
     return menu_choice
     
 
 # character name input def
 def char_name():
     name = input("What name would you like to call your character?: ")
+    print("")
     return name
     
 
