@@ -8,14 +8,12 @@ def create_menu():
     print("")
     return menu_choice
     
-
 # character name input def
 def char_name():
     name = input("What name would you like to call your character?: ")
     print("")
     return name
     
-
 # made the classes a dictionary to clean it up, this way I can let the user just input an integer value
 # to select the class but only returns the class name. Hopefully cleaner for file handling
 def print_class():
@@ -48,4 +46,10 @@ def dice_roll(num_dice):
     rolls.remove(min(rolls))
     return sum(rolls)
 
-
+# file_name = "Character"
+# # file handling part
+# def edit_char():
+#     # try to read file
+#     edit_char = open(file_name, "r")
+#     edit_char.close()
+#     print("doesn't exist")

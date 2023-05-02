@@ -1,5 +1,7 @@
 # imports my functions
 from functions import create_menu, dice_roll, char_name, print_class
+import csv
+import os
 
 
 attribute_scores = {}
@@ -21,7 +23,6 @@ while menu_choice != "4":
             for a in attribute_names:
                 score = dice_roll(4)
                 attribute_scores[a] = score
-            import os
             os.system('cls' if os.name == 'nt' else 'clear')
             # clears the terminal for a cleaner display of the final results
             print("Thank you for using Dnd Character Creator")
@@ -30,6 +31,12 @@ while menu_choice != "4":
             print("Below are your attribute scores:")
             for key, value in attribute_scores.items():
                 print(key+str(":"), value)
+            with open(f"{name}.csv", mode = "w", newline = "") as file:
+                writer = csv.writer(file)
+                writer.writerow(["Name", name])
+                writer.writerow(["Class", char_class])
+                for key, value in attribute_scores.items():
+                    writer.writerow(key, value) # not working right, need to play with
                 print("")
                 print("What would you like to do now?")
         case "2":
@@ -43,9 +50,8 @@ while menu_choice != "4":
     
 
 
- # need to finish the dice roll attribute allocation
-
- # need to add in a re-roll option for attributes
+ 
+ # need to add in a re-roll option for attributes(might leave this as part of the edit section)
  # need to create the file handling part
  # once file handling is built create an edit character functions as per option 2 and
  # print all characters created as per option 3
