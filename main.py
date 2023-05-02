@@ -13,17 +13,17 @@ while menu_choice != "4":
 
     match menu_choice:
         case "1":
-            print("You have chosen to create a new character.")
-            name = char_name()
-            print(f"Hello {name} \n")
-            char_class = print_class()
-            print(f"You've chosen {char_class}. \n")
+            # print("You have chosen to create a new character.")
+            # name = char_name()
+            # print(f"Hello {name} \n")
+            # char_class = print_class()
+            # print(f"You've chosen {char_class}. \n")
             attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
             attribute_scores = {}
             for a in attribute_names:
                 score = dice_roll(4)
                 attribute_scores[a] = score
-                print(f"Below are your attribute scores: {attribute_scores}") # dice roll funciton needs cleaning up
+            print(f"Below are your attribute scores: {attribute_scores} \n") # dice roll funciton needs cleaning up
         case "2":
             print("You have chosen to edit a previous character.")
         case "3":
