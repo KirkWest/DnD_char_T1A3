@@ -10,7 +10,7 @@ print("Welcome to you Dnd character creator, would you like to")
 
 menu_choice = ""
 
-while menu_choice != "4":
+while menu_choice != "4": #
     menu_choice = create_menu()
 
     match menu_choice:
@@ -36,7 +36,8 @@ while menu_choice != "4":
                 writer.writerow(["Name", name])
                 writer.writerow(["Class", char_class])
                 for key, value in attribute_scores.items():
-                    writer.writerow(key, value) # not working right, need to play with
+                    writer.writerow([key, value])
+                    # not working right, need to play with
                 print("")
                 print("What would you like to do now?")
         case "2":
