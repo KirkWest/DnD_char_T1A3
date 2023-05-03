@@ -1,47 +1,22 @@
 # imports my functions
-from functions import create_menu, dice_roll, char_name, print_class
-import csv
-import os
+from functions import create_menu, print_csv, create_new_character
 
-
-attribute_scores = {}
-attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom" "charisma"]
 print("Welcome to you Dnd character creator, would you like to")
 
 menu_choice = ""
 
 while menu_choice != "4": #
     menu_choice = create_menu()
-
     match menu_choice:
         case "1":
             print("You have chosen to create a new character.\n")
-            name = char_name()
-            char_class = print_class()
-            attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
-            attribute_scores = {}
-            for a in attribute_names:
-                score = dice_roll(4)
-                attribute_scores[a] = score
-            os.system('cls' if os.name == 'nt' else 'clear')
-            # clears the terminal for a cleaner display of the final results
-            print("Thank you for using Dnd Character Creator")
-            print(f"Character name: {name}")
-            print(f"Character class: {char_class}\n")
-            print("Below are your attribute scores:")
-            for key, value in attribute_scores.items():
-                print(key+str(":"), value)
-            with open(f"{name}.csv", mode = "w", newline = "") as file:
-                writer = csv.writer(file)
-                writer.writerow(["Name", name])
-                writer.writerow(["Class", char_class])
-                for key, value in attribute_scores.items():
-                    writer.writerow([key, value])
-                    # not working right, need to play with
-                print("")
-                print("What would you like to do now?")
+            create_new_character()
+            print("What would you like to do now?") # re prints out the menu list
         case "2":
-            print("You have chosen to edit a previous character.")
+            print_csv()
+            print("")
+            print("Which character would you like to edit?")
+
         case "3":
             print("You have chosen to see a list of created characters.")
         case "4":
