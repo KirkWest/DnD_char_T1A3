@@ -24,10 +24,8 @@ while menu_choice != "4": #
         case _:
             print("Please enter a number from 1-4.")
     
+# printing the csv files available to access is done, next I need to be able to access a chosen character
+# print out said character in the terminal then edit class or stats.
 
-
- 
- # need to add in a re-roll option for attributes(might leave this as part of the edit section)
- # need to create the file handling part
- # once file handling is built create an edit character functions as per option 2 and
- # print all characters created as per option 3
+# need to add in a re-roll option for attributes(might leave this as part of the edit section)
+# print all characters created as per option 3
