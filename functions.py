@@ -52,57 +52,11 @@ def dice_roll(num_dice):
     rolls.remove(min(rolls))
     return sum(rolls)
 
-# using glob import to find and print out any characters already made into the terminal
-def csv_list():
-    import glob # imports library to search for any csv files (characters already built)
-    csv_files = glob.glob("*.csv")
-    print("Current list of chaaracters: \n")
-    for file in csv_files:
-        name_only = os.path.splitext(file)[0] # removes the .csv from the print
-        print(name_only)
-    return csv_files
-
-def print_char(csv_files): # this creates the selection functions for both the view and edit options of menu
-    while True: # loops back if name input is wrong
-        char_choice = input("Please enter the name of the character you would like view: ")
-        char_file = f"{char_choice}.csv"
-        if char_file in csv_files:
-            with open(char_file, mode = "r") as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    print(row)
-            break
-        else:
-            print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
-
-def edit_char(csv_files):
-    char_choice = input("Which character would you like to edit? Please enter their name: ")
-    char_file = f"{char_choice}.csv"
-    if char_file in csv_files:
-        with open(char_file, mode = "r") as file:
-            reader = csv.reader(file)
-            char_info = []
-            for row in reader:
-                char_info.append(row)
-            print(char_info)
-            value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
-            new_value = input("What would you like to edit?: ")
-            for i in range(len(char_info)):
-                if value_to_edit == char_info[i][0]:
-                    char_info[i][1] = new_value
-            with open(char_file, mode = "w", newline = "") as f:
-                writer = csv.writer(f)
-                writer.writerows(char_info)
-        print("Here is your updated character.")
-        print(char_info)
-    else:
-        print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
-# Don't like how it prints the options for changing, needs work, need to add in a re-print of the character once changed
-
+# creates the character from all the inputs and writes to csv file
 def create_new_character():
     name = char_name()
     char_class = print_class()
-    attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
+    attribute_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
     attribute_scores = {}
     for a in attribute_names:
         score = dice_roll(4)
@@ -123,11 +77,58 @@ def create_new_character():
             writer.writerow([key, value]) # writes in characters attributes
         print("")
 
+# using glob import to find and print out any characters already made into the terminal
+def csv_list():
+    import glob # imports library to search for any csv files (characters already built)
+    csv_files = glob.glob("*.csv")
+    print("Current list of characters: \n")
+    for file in csv_files:
+        name_only = os.path.splitext(file)[0] # removes the .csv from the print
+        print(name_only)
+    return csv_files
 
-# file_name = "Character"
-# # file handling part
-# def edit_char():
-#     # try to read file
-#     edit_char = open(file_name, "r")
-#     edit_char.close()
-#     print("doesn't exist")
+
+def edit_char(csv_files):
+    char_choice = input("Which character would you like to edit? Please enter their name: ")
+    print("")
+    char_file = f"{char_choice}.csv"
+    if char_file in csv_files:
+        with open(char_file, mode = "r") as file:
+            reader = csv.reader(file)
+            char_info = []
+            for row in reader:
+                print(row)
+                char_info.append(row)
+            changes = True
+            while changes:
+                value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
+                # need to add error handling block here
+                new_value = input("Please enter the change: ")
+                for i in range(len(char_info)):
+                    if value_to_edit == char_info[i][0]:
+                        char_info[i][1] = new_value
+                with open(char_file, mode = "w", newline = "") as file:
+                    writer = csv.writer(file)
+                    writer.writerows(char_info)
+                changes_prompt = input("Any additional changes? y/n: ") #lets the user make additional changes
+                if changes_prompt.lower()  == "n":
+                    changes = False
+            print("Great changes!.")
+    else:
+        print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
+    # Don't like how it prints the options for changing, needs work, need to add in a re-print of the character once changed
+
+# function to print out a csv file the user has selected in view or edit meu options
+def print_char(csv_files):
+    while True: # loops back if name input is wrong
+        char_choice = input("Please enter the name of the character you would like view: ")
+        char_file = f"{char_choice}.csv"
+        if char_file in csv_files:
+            with open(char_file, mode = "r") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    print(row)
+            break
+        else:
+            print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
+

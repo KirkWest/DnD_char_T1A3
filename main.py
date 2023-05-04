@@ -13,14 +13,13 @@ while menu_choice != "4": #
             create_new_character() # uses create new character function
             print("Congratulations on creating a new character!!")
             print("")
-            print("What would you like to do now?") # re prints out the menu list
+            print("Is there anything else you'd like to do?") # re prints out the menu list
         case "2":
-            csv_list()
+            csv_files = csv_list()
             print("")
             edit_char(csv_files)
-            print("Congratulations on creating a new character!!")
             print("")
-            print("Which character would you like to edit?")
+            print("Is there anything else you'd like to do?")
 
         case "3":
             print("Below is a list of characters you have available to view")
@@ -39,5 +38,4 @@ while menu_choice != "4": #
 # Need to clean up the editing interface, add in a new print of the character at the end
 # Add in some colour and tidy up the formatting, if time try and incorporate DRY in spots that might be reusing same code
 
-# need to add in a re-roll option for attributes(might leave this as part of the edit section)
-# print all characters created as per option 3
+# dropped re-roll, leaving it to just edit if the user doesn't like their stats or needs to update on level up.
