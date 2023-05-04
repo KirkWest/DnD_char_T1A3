@@ -101,22 +101,29 @@ def edit_char(csv_files):
                 char_info.append(row)
             changes = True
             while changes:
-                value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
-                # need to add error handling block here
-                new_value = input("Please enter the change: ")
-                for i in range(len(char_info)):
-                    if value_to_edit == char_info[i][0]:
-                        char_info[i][1] = new_value
-                with open(char_file, mode = "w", newline = "") as file:
-                    writer = csv.writer(file)
-                    writer.writerows(char_info)
-                changes_prompt = input("Any additional changes? y/n: ") #lets the user make additional changes
-                if changes_prompt.lower()  == "n":
-                    changes = False
-            print("Great changes!.")
+                while True:
+                    try:
+                        value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
+                        if value_to_edit not in [row[0] for row in char_info]:
+                            raise ValueError("That doesn't exist, try again")
+                        break
+                    except ValueError as error:
+                        print(error)
+                while True:
+                    new_value = input("Please enter the change: ")
+                    for i in range(len(char_info)):
+                        if value_to_edit == char_info[i][0]:
+                            char_info[i][1] = new_value
+                    with open(char_file, mode = "w", newline = "") as file:
+                        writer = csv.writer(file)
+                        writer.writerows(char_info)
+                    changes_prompt = input("Any additional changes? y/n: ") #lets the user make additional changes
+                    if changes_prompt.lower()  == "n":
+                        changes = False
+                print("Great changes!.")
     else:
         print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
-    # Don't like how it prints the options for changing, needs work, need to add in a re-print of the character once changed
+    # print fixed, attempting error handling
 
 # function to print out a csv file the user has selected in view or edit meu options
 def print_char(csv_files):
