@@ -2,7 +2,7 @@ import os # imports library for splitting the file to remove .csv
 import csv
 
 attribute_scores = {}
-attribute_names = ["strength", "dexterity", "constitution", "intelligence", "wisdom" "charisma"]
+attribute_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom" "Charisma"]
 
 def create_menu():
     print("1. Create new character enter 1")
@@ -63,8 +63,8 @@ def csv_list():
     return csv_files
 
 def print_char(csv_files): # this creates the selection functions for both the view and edit options of menu
-    while True:
-        char_choice = input("Please enter the name of character you would like to select: ")
+    while True: # loops back if name input is wrong
+        char_choice = input("Please enter the name of the character you would like view: ")
         char_file = f"{char_choice}.csv"
         if char_file in csv_files:
             with open(char_file, mode = "r") as file:
@@ -73,8 +73,31 @@ def print_char(csv_files): # this creates the selection functions for both the v
                     print(row)
             break
         else:
-            print(f"That character does not exist, try again \n")
-        
+            print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
+
+def edit_char(csv_files):
+    char_choice = input("Which character would you like to edit? Please enter their name: ")
+    char_file = f"{char_choice}.csv"
+    if char_file in csv_files:
+        with open(char_file, mode = "r") as file:
+            reader = csv.reader(file)
+            char_info = []
+            for row in reader:
+                char_info.append(row)
+            print(char_info)
+            value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
+            new_value = input("What would you like to edit?: ")
+            for i in range(len(char_info)):
+                if value_to_edit == char_info[i][0]:
+                    char_info[i][1] = new_value
+            with open(char_file, mode = "w", newline = "") as f:
+                writer = csv.writer(f)
+                writer.writerows(char_info)
+        print("Here is your updated character.")
+        print(char_info)
+    else:
+        print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
+# Don't like how it prints the options for changing, needs work, need to add in a re-print of the character once changed
 
 def create_new_character():
     name = char_name()
