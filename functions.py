@@ -1,8 +1,8 @@
 import os # imports library for splitting the file to remove .csv
 import csv
 
-attribute_scores = {}
-attribute_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom" "Charisma"]
+# attribute_scores = {}
+# attribute_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom" "Charisma"]
 
 def create_menu():
     print("1. Create new character enter 1")
@@ -89,41 +89,45 @@ def csv_list():
 
 
 def edit_char(csv_files):
-    char_choice = input("Which character would you like to edit? Please enter their name: ")
-    print("")
-    char_file = f"{char_choice}.csv"
-    if char_file in csv_files:
-        with open(char_file, mode = "r") as file:
-            reader = csv.reader(file)
-            char_info = []
-            for row in reader:
-                print(row)
-                char_info.append(row)
-            changes = True
-            while changes:
-                while True:
-                    try:
-                        value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
-                        if value_to_edit not in [row[0] for row in char_info]:
-                            raise ValueError("That doesn't exist, try again")
-                        break
-                    except ValueError as error:
-                        print(error)
-                while True:
-                    new_value = input("Please enter the change: ")
-                    for i in range(len(char_info)):
-                        if value_to_edit == char_info[i][0]:
-                            char_info[i][1] = new_value
-                    with open(char_file, mode = "w", newline = "") as file:
-                        writer = csv.writer(file)
-                        writer.writerows(char_info)
-                    changes_prompt = input("Any additional changes? y/n: ") #lets the user make additional changes
-                    if changes_prompt.lower()  == "n":
-                        changes = False
-                print("Great changes!.")
-    else:
-        print(f"That character does not exist or you've forgotten missed the capital letter, try again \n")
-    # print fixed, attempting error handling
+    while True:
+        char_choice = input("Which character would you like to edit? Please enter their name: ")
+        print("")
+        char_file = f"{char_choice}.csv"
+        if char_file in csv_files:
+            with open(char_file, mode = "r") as file:
+                reader = csv.reader(file)
+                char_info = []
+                for row in reader:
+                    print(row)
+                    char_info.append(row)
+                changes = True # creates additional changes loop
+                while changes:
+                    while True:
+                        try: # try block for error handling
+                            value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
+                            if value_to_edit not in [row[0] for row in char_info]:
+                                raise ValueError("That doesn't exist, try again") # raises error if input doesn't anything in the file
+                            break
+                        except ValueError as error:
+                            print(error)
+                    while True:
+                        new_value = input("Please enter the change: ")
+                        for i in range(len(char_info)):
+                            if value_to_edit == char_info[i][0]:
+                                char_info[i][1] = new_value
+                        with open(char_file, mode = "w", newline = "") as file:
+                            writer = csv.writer(file)
+                            writer.writerows(char_info)
+                        changes_prompt = input("Any additional changes? y/n: ") #lets the user make additional changes
+                        if changes_prompt.lower()  == "n":
+                            changes = False
+                            print("Great changes!")
+                            break # breaks inner loop
+                        elif changes_prompt.lower() == "y":
+                            break
+            return
+        print("That character does not exist, try again")
+
 
 # function to print out a csv file the user has selected in view or edit meu options
 def print_char(csv_files):
