@@ -1,5 +1,5 @@
 # imports my functions
-from functions import create_menu, print_csv, create_new_character
+from functions import create_menu, create_new_character, csv_list, print_char
 
 print("Welcome to you Dnd character creator, would you like to")
 
@@ -10,15 +10,20 @@ while menu_choice != "4": #
     match menu_choice:
         case "1":
             print("You have chosen to create a new character.\n")
-            create_new_character()
+            create_new_character() # uses create new character function
             print("What would you like to do now?") # re prints out the menu list
         case "2":
-            print_csv()
+            csv_list()
             print("")
             print("Which character would you like to edit?")
 
         case "3":
-            print("You have chosen to see a list of created characters.")
+            print("Below is a list of characters you have available to view")
+            csv_files = csv_list()
+            print("")
+            print_char(csv_files)
+            print("")
+            
         case "4":
             print("Thankyou for using DnD character creator")
         case _:

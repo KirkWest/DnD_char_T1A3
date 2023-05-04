@@ -53,13 +53,28 @@ def dice_roll(num_dice):
     return sum(rolls)
 
 # using glob import to find and print out any characters already made into the terminal
-def print_csv():
+def csv_list():
     import glob # imports library to search for any csv files (characters already built)
     csv_files = glob.glob("*.csv")
     print("Current list of chaaracters: \n")
     for file in csv_files:
         name_only = os.path.splitext(file)[0] # removes the .csv from the print
         print(name_only)
+    return csv_files
+
+def print_char(csv_files): # this creates the selection functions for both the view and edit options of menu
+    while True:
+        char_choice = input("Please enter the name of character you would like to select: ")
+        char_file = f"{char_choice}.csv"
+        if char_file in csv_files:
+            with open(char_file, mode = "r") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    print(row)
+            break
+        else:
+            print(f"That character does not exist, try again \n")
+        
 
 def create_new_character():
     name = char_name()
