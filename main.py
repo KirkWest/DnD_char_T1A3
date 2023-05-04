@@ -34,8 +34,6 @@ while menu_choice != "4": #
         case _:
             print("Please enter a number from 1-4.")
     
-
-# Need to clean up the editing interface, add in a new print of the character at the end
 # Add in some colour and tidy up the formatting, if time try and incorporate DRY in spots that might be reusing same code
 
 # dropped re-roll, leaving it to just edit if the user doesn't like their stats or needs to update on level up.

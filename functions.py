@@ -89,23 +89,25 @@ def csv_list():
 
 
 def edit_char(csv_files):
+    csv_files_lower = [file.lower() for file in csv_files]
     while True:
-        char_choice = input("Which character would you like to edit? Please enter their name: ")
+        char_choice = input("Which character would you like to edit? Please enter their name: ").lower()
         print("")
-        char_file = f"{char_choice}.csv"
-        if char_file in csv_files:
+        char_file = f"{char_choice}.csv".lower()
+        if char_file.lower() in csv_files_lower:
             with open(char_file, mode = "r") as file:
                 reader = csv.reader(file)
                 char_info = []
                 for row in reader:
+                    row[0] = row[0].lower()
                     print(row)
                     char_info.append(row)
                 changes = True # creates additional changes loop
                 while changes:
                     while True:
                         try: # try block for error handling
-                            value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ")
-                            if value_to_edit not in [row[0] for row in char_info]:
+                            value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ").lower()
+                            if value_to_edit.lower() not in [row[0] for row in char_info]:
                                 raise ValueError("That doesn't exist, try again") # raises error if input doesn't anything in the file
                             break
                         except ValueError as error:
@@ -113,18 +115,18 @@ def edit_char(csv_files):
                     while True:
                         new_value = input("Please enter the change: ")
                         for i in range(len(char_info)):
-                            if value_to_edit == char_info[i][0]:
-                                char_info[i][1] = new_value
+                            if value_to_edit.lower() == char_info[i][0]:
+                                char_info[i][1] = new_value.capitalize() # capilizes the class name the user puts in
                         with open(char_file, mode = "w", newline = "") as file:
                             writer = csv.writer(file)
                             writer.writerows(char_info)
-                        changes_prompt = input("Any additional changes? y/n: ") #lets the user make additional changes
-                        if changes_prompt.lower()  == "n":
+                        changes_prompt = input("Any additional changes? y/n: ").lower() #lets the user make additional changes
+                        if changes_prompt  == "n":
                             changes = False
                             print("Great changes!")
                             break # breaks inner loop
-                        elif changes_prompt.lower() == "y":
-                            break
+                        elif changes_prompt == "y":
+                            break # loops back through the options
             return
         print("That character does not exist, try again")
 
