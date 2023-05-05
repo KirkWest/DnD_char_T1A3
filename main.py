@@ -1,7 +1,9 @@
 # imports my functions
+from colored import fg, bg, attr
+
 from functions import create_menu, create_new_character, csv_list, print_char, edit_char
 
-print("Welcome to you Dnd character creator, would you like to")
+print(f"{fg('blue')}Welcome to your Dnd character creator, would you like to {attr('reset')}")
 
 menu_choice = ""
 
