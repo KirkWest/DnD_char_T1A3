@@ -2,9 +2,8 @@ import os # imports library for splitting the file to remove .csv
 import csv
 import random # imports library for my dice roll function
 import glob # imports library to search for any csv files (characters already created)
+from colored import fg, bg, attr
 
-# attribute_scores = {}
-# attribute_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom" "Charisma"]
 
 def create_menu():
     print("1. Create new character enter 1")
@@ -16,14 +15,16 @@ def create_menu():
     print("")
     return menu_choice
     
+
 # character name input def
 def char_name():
-    name = input("What name would you like to call your character?: ")
+    name = input(f"{fg('blue')}What name would you like to call your character?: {attr('reset')}")
     print("")
     return name
     
-# made the classes a dictionary to clean it up, this way I can let the user just input an integer value
-# to select the class but only returns the class name. Hopefully cleaner for file handling
+
+# made the classes a dictionary to clean it up, this way I can let the user just input an number value
+# to select the class but only returns the class name. Hopefully cleaner
 def print_class():
     classes = {"1": "Barbarian",
                "2": "Bard",
@@ -38,11 +39,12 @@ def print_class():
                "11": "Warlock",
                "12": "Wizard"
                }
-    print("Class list")
+    print(f"{fg('green')}Class list{attr('reset')}")
     for i, c in classes.items():
         print(f"{i}. {c}")
-    choice = input("Which class would you like? Choose from the above (1-12): ")
+    choice = input(f"{fg('blue')}Which class would you like? Choose from the above (1-12): {attr('reset')}")
     return classes.get(choice)
+
 
 # dice roll function, rolls a certain amount of dice to be specified then removes the
 # lowest number as per DnD rules (usually 4 die, so only count the top 3 scores count)
@@ -52,6 +54,7 @@ def dice_roll(num_dice):
         rolls.append(random.randint(1, 6))
     rolls.remove(min(rolls))
     return sum(rolls)
+
 
 # creates the character from all the inputs and writes to csv file
 def create_new_character():
@@ -64,10 +67,10 @@ def create_new_character():
         attribute_scores[a] = score
     os.system('cls' if os.name == 'nt' else 'clear')
     # clears the terminal for a cleaner display of the final results
-    print("Thank you for using Dnd Character Creator")
+    print(f"{fg('blue')}Thank you for using Dnd Character Creator{attr('reset')}")
     print(f"Character name: {name}") # prints character name input
     print(f"Character class: {char_class}\n") # character class chosen
-    print("Below are your attribute scores:")
+    print(f"{fg('blue')}Below are your attribute scores:{attr('reset')}")
     for key, value in attribute_scores.items():
         print(key+str(":"), value) # turns the attributes and the rolled stats to a dictionary
     with open(f"{name}.csv", mode = "w", newline = "") as file: # creates the csv file under the characters name
@@ -78,10 +81,14 @@ def create_new_character():
             writer.writerow([key, value]) # writes in characters attributes
         print("")
 
+
 # using glob import to find and print out any characters already made into the terminal
 def csv_list():
     csv_files = glob.glob("*.csv")
-    print("Current list of characters: \n")
+    if not csv_files:
+        print(f"{fg('red')}You have no characters made yet{attr('reset')}")
+        return None
+    print(f"{fg('blue')}Current list of characters: {attr('reset')}\n")
     for file in csv_files:
         name_only = os.path.splitext(file)[0] # removes the .csv from the print
         print(name_only)
@@ -91,7 +98,7 @@ def csv_list():
 def edit_char(csv_files):
     csv_files_lower = [file.lower() for file in csv_files] # changes csv file names to lower case when it compares them to the user input
     while True:
-        char_choice = input("Which character would you like to edit? Please enter their name: ").lower() # turns user input to lowercase to match the previous function so the search isn't case sensitive
+        char_choice = input(f"{fg('blue')}Which character would you like to edit? Please enter their name: {attr('reset')}").lower() # turns user input to lowercase to match the previous function so the search isn't case sensitive
         print("")
         char_file = f"{char_choice}.csv".lower() # uses the user input when searching selecting the file
         if char_file.lower() in csv_files_lower:
@@ -106,36 +113,36 @@ def edit_char(csv_files):
                 while changes:
                     while True:
                         try: # try block for error handling
-                            value_to_edit = input("What would you like to edit? e.g Class or Strength etc: ").lower() # user input for slecting what key they want to change the value of
+                            value_to_edit = input(f"{fg('blue')}What would you like to edit? e.g Class or Strength etc: {attr('reset')}").lower() # user input for slecting what key they want to change the value of
                             if value_to_edit.lower() not in [row[0] for row in char_info]:
-                                raise ValueError("That doesn't exist, try again") # raises error if input doesn't anything in the file
+                                raise ValueError(f"{fg('red')}That doesn't exist, try again{attr('reset')}") # raises error if input doesn't anything in the file
                             break
                         except ValueError as error:
                             print(error)
                     while True:
-                        new_value = input("Please enter the change: ") # if user input matches a key then asks what to change value to
+                        new_value = input(f"{fg('blue')}Please enter the change: {attr('reset')}") # if user input matches a key then asks what to change value to
                         for i in range(len(char_info)):
                             if value_to_edit.lower() == char_info[i][0]:
                                 char_info[i][1] = new_value.capitalize() # capilizes the class name the user puts in to match the original class list
                         with open(char_file, mode = "w", newline = "") as file:
                             writer = csv.writer(file)
                             writer.writerows(char_info)
-                        changes_prompt = input("Any additional changes? y/n: ").lower() #lets the user make additional changes
+                        changes_prompt = input(f"{fg('blue')}Any additional changes? y/n: {attr('reset')}").lower() #lets the user make additional changes
                         if changes_prompt  == "n":
                             changes = False
-                            print("Great changes!")
+                            print(f"{fg('green')}Great changes!{attr('reset')}")
                             break # breaks inner loop
                         elif changes_prompt == "y":
                             break # loops back through the slecect key to change value of again
             return
-        print("That character does not exist, try again")
+        print(f"{fg('red')}That character does not exist, try again{attr('reset')}")
 
 
 # function to print out a csv file the user has selected in view or edit meu options
 def print_char(csv_files):
     csv_files_lower = [file.lower() for file in csv_files]
     while True: # loops back if name input is wrong
-        char_choice = input("Please enter the name of the character you would like view: ").lower()
+        char_choice = input(f"{fg('blue')}Please enter the name of the character you would like view: {attr('reset')}").lower()
         char_file = f"{char_choice}.csv".lower()
         if char_file.lower() in csv_files_lower:
             with open(char_file, mode = "r") as file:
@@ -144,5 +151,4 @@ def print_char(csv_files):
                     print(row)
             break
         else:
-            print(f"That character does not appear to exist, try again \n")
-
+            print(f"{fg('red')}That character does not appear to exist, try again {attr('reset')}\n")       
