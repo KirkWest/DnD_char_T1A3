@@ -1,8 +1,11 @@
+# Functions page, will contain all functions that the main.py uses
+
+from colored import fg, bg, attr
+
 import os # imports library for splitting the file to remove .csv
 import csv
 import random # imports library for my dice roll function
 import glob # imports library to search for any csv files (characters already created)
-from colored import fg, bg, attr
 
 
 def create_menu():
